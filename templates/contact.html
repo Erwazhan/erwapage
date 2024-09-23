@@ -1,0 +1,24 @@
+{%extends 'main.html' %}
+{% load static %}
+
+{%block content%}
+<h1 style="text-align:center;">Contact</h1>
+
+<div style="border: 2px solid black; padding: 30px; height: 50%; width: 80%; margin: 0 auto;">
+  <div class="contact-bar" style="position:relative; width:70%; left:15%;">
+    <div class="field-row-stacked" style="width: 25%; margin-bottom: 10px;">
+      <label for="text22">Email</label>
+      <input id="text22" type="email" style="width: 100%;" />
+    </div>
+    <div class="field-row-stacked" style="width: 25%; margin-bottom: 10px;">
+      <label for="text23">Subject</label>
+      <input id="text23" type="text" style="width: 100%;" />
+    </div>
+    <div class="field-row-stacked" style="width: 50%; margin-bottom: 10px;">
+      <label for="text20">Message</label>
+      <textarea id="text20" rows="15" style="width: 100%;"></textarea>
+    </div>
+    <button style="width:20%; height:10%; margin-top:10px;" type="send">Send</button>
+  </div>
+</div>
+{%endblock%}

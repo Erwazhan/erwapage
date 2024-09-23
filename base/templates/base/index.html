@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div style="position: relative; left:25%; width:50%; text-align:center; background-color:black; color:white;">
+  <h1>Erwazhan</h1>
+</div>
+
+<div class="gallery" style="background-image: ">
+  {% for window in windows %}
+    <div class="gallery_container">
+      <div class="window_gallery" id="window{{ window.foldername }}">
+        <div class="title-bar">
+          <div class="title-bar-text">
+            <p>{{ window.foldername }}</p>
+          </div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+
+        <div class="window-body">
+          {% for x, y in window_files.items %}
+            {% if window.foldername == x %}
+              {% for i in y %}
+                <img src="{{ MEDIA_URL }}/images/{{ x }}/{{ i }}" width="100%">
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="gallery_text" style="background-color:white;">
+        <p>{{ window.description }}</p>
+        <h3>{{ window.name }}</h3>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+{% endblock %}

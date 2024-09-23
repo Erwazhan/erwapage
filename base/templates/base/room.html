@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% include static%}
+{% load custom_filters %}
+
+{% block content %}
+<h1 style="text-align: center;">{{room.name}}</h1>
+
+<div class="gallery">
+  {% for r, project_img in room_img.items %}
+  {% if r == room.name %}
+    {% for f, d in room_info %}
+      <div class="project_container" style="width:100%;">
+        <div class="window_project" id="{{ f }}">
+          <div class="title-bar">
+            <div class="title-bar-text">
+              <p>{{ f }}</p>  <!-- Folder Name -->
+            </div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+
+          <div class="window-body">
+            {% for x, y in project_img.items %}
+              {% if f == x %}
+                {% for i in y %}
+                  {% if i|is_txt %}
+                    <embed src="{{ MEDIA_URL }}/project_img/{{ room.name }}/{{ x }}/{{ i }}" width="100%" height="auto">
+                  {% else %}
+                    <img src="{{ MEDIA_URL }}/project_img/{{ room.name }}/{{ x }}/{{ i }}" width="100%">
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="project_text">
+          <h3>{{ d }}</h3>  <!-- Folder Description -->
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<link rel="stylesheet" href="{% static 'animation.css' %}">
+
+  {% for window in windows %}
+  <div class="window_big" id="window{{ window.id }}" style="position: absolute; top: {{ window_positions.window.id.top}}px;">
+      <div class="title-bar">
+          <div class="title-bar-text">
+              <p>{{ window.name }}</p>
+          </div>
+          <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+          </div>
+      </div>
+
+      <div class="window-body">
+        {% for x, y in window_files.items %}
+          {% if window.id == x %}
+            {% for i in y %}
+              <img src="{{ MEDIA_URL }}/images/{{x}}/{{i}}" width="100%">
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="corner"></div>
+  </div>
+  {% endfor %}
+</body>
+
