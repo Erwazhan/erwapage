@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'erwapage.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'erwapage',
         'USER': 'admin',
         'PASSWORD': '!WEBSITE44Pw',
         'HOST': 'localhost',
