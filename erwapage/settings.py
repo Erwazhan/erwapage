@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w=%y&g%u-fe02ufdd*qilhzi1=%lm=&g!n13@z0*s$x7&97530
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['52.15.125.81', 'localhost', 'erwazhan.com','www.erwazhan.com']
+ALLOWED_HOSTS = ['52.15.125.81', 'localhost', 'erwazhan.com','www.erwazhan.com','127.0.0.1']
 
 
 # Application definition
@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'erwapage.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'erwapage',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
         'USER': 'admin',
         'PASSWORD': '!WEBSITE44Pw',
         'HOST': 'localhost',
