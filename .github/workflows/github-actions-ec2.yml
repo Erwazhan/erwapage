@@ -16,9 +16,10 @@ jobs:
     - name: Install SSH Client
       run: sudo apt-get install -y rsync
 
-    # Write the SSH private key to a file
+    # Ensure the .ssh directory exists and write the SSH private key to a file
     - name: Add SSH key
       run: |
+        mkdir -p ~/.ssh  # Ensure the .ssh directory exists
         echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_private_key
         chmod 600 ~/.ssh/ec2_private_key
 
