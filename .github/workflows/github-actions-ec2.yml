@@ -3,44 +3,24 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # or your desired branch
+      - main  # Trigger the workflow on pushes to the 'main' branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Create SSH key file
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
+    - name: Deploy to EC2 Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}  # Your EC2 private key stored in GitHub Secrets
+        REMOTE_HOST: ${{ secrets.HOST_DNS }}         # Your EC2 public IP or DNS
+        REMOTE_USER: ${{ secrets.USERNAME }}         # Your EC2 instance's SSH user, e.g., 'ubuntu'
+        TARGET: ${{ secrets.TARGET_DIR }}            # Target directory on your EC2 instance, e.g., /home/ubuntu/app
 
-      - name: Copy files to EC2
-        env:
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
-        run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem -r * $REMOTE_USER@$REMOTE_HOST:$TARGET
-
-      - name: SSH into EC2 and restart Gunicorn and Nginx
-        env:
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
-        run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem $REMOTE_USER@$REMOTE_HOST << 'EOF'
-            cd $TARGET
-            source env/bin/activate
-            pip install -r requirements.txt
-            python manage.py migrate
-            python manage.py collectstatic --noinput
-            sudo systemctl restart gunicorn
-            sudo systemctl restart nginx
-          EOF
-
-      - name: Clean up private key file
-        run: rm -f private_key.pem
+    - name: Restart Gunicorn
+      run: |
+        ssh -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "sudo systemctl restart gunicorn"
