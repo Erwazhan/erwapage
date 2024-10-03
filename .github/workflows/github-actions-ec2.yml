@@ -13,17 +13,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Deploy to EC2 Server
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}  # Your EC2 private key stored in GitHub Secrets
-        REMOTE_HOST: ${{ secrets.HOST_DNS }}         # Your EC2 public IP or DNS
-        REMOTE_USER: ${{ secrets.USERNAME }}         # Your EC2 instance's SSH user, e.g., 'ubuntu'
-        TARGET: ${{ secrets.TARGET_DIR }}            # Target directory on your EC2 instance, e.g., /home/ubuntu/app
+    - name: Install SSH Client
+      run: sudo apt-get install -y rsync
+
+    # Write the SSH private key to a file
+    - name: Add SSH key
+      run: |
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_private_key
+        chmod 600 ~/.ssh/ec2_private_key
 
     - name: Sync files to EC2 Server
       run: |
-        rsync -avz --delete -e "ssh -i ${{ secrets.EC2_SSH_KEY }}" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:${{ secrets.TARGET_DIR }}
+        rsync -avz --delete -e "ssh -i ~/.ssh/ec2_private_key" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:${{ secrets.TARGET_DIR }}
 
     - name: Executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
