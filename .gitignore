@@ -1,2 +1,5 @@
+# Ignore compiled Python files
+*.pyc
+__pycache__/
 
 erwapage/settings.py
