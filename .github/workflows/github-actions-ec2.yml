@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # or the branch you want to trigger deployment from
+      - main  # or your desired branch
 
 jobs:
   deploy:
@@ -13,23 +13,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Create SSH key file
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+
       - name: Copy files to EC2
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
         run: |
-          scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY -r * $REMOTE_USER@$REMOTE_HOST:$TARGET
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r * $REMOTE_USER@$REMOTE_HOST:$TARGET
 
       - name: SSH into EC2 and restart Gunicorn and Nginx
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
         run: |
-          ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY $REMOTE_USER@$REMOTE_HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key.pem $REMOTE_USER@$REMOTE_HOST << 'EOF'
             cd $TARGET
             source env/bin/activate
             pip install -r requirements.txt
@@ -38,3 +41,6 @@ jobs:
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
           EOF
+
+      - name: Clean up private key file
+        run: rm -f private_key.pem
