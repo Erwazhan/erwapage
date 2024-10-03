@@ -21,6 +21,10 @@ jobs:
         REMOTE_USER: ${{ secrets.USERNAME }}         # Your EC2 instance's SSH user, e.g., 'ubuntu'
         TARGET: ${{ secrets.TARGET_DIR }}            # Target directory on your EC2 instance, e.g., /home/ubuntu/app
 
+    - name: Sync files to EC2 Server
+      run: |
+        rsync -avz --delete -e "ssh -i ${{ secrets.EC2_SSH_KEY }}" ./ ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }}:${{ secrets.TARGET_DIR }}
+
     - name: Executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       with:
