@@ -30,6 +30,7 @@ def room(request, pk):
             if os.path.exists(folder_path):
                 files = os.listdir(folder_path)
                 files = [file for file in files if os.path.isfile(os.path.join(folder_path, file)) and file.lower().endswith(('.jpg', '.jpeg', '.png', 'pdf'))]
+                files.sort()
             else:
                 files = []
 
@@ -69,6 +70,7 @@ def home(request):
     if os.path.exists(folder_path):
         files = os.listdir(folder_path)
         files = [f for f in files if os.path.isfile(os.path.join(folder_path, f)) and f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+        files.sort()
     else:
         files = []
 
