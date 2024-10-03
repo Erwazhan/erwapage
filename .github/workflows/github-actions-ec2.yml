@@ -21,6 +21,15 @@ jobs:
         REMOTE_USER: ${{ secrets.USERNAME }}         # Your EC2 instance's SSH user, e.g., 'ubuntu'
         TARGET: ${{ secrets.TARGET_DIR }}            # Target directory on your EC2 instance, e.g., /home/ubuntu/app
 
-    - name: Restart Gunicorn
-      run: |
-        ssh -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "sudo systemctl restart gunicorn"
+    - name: Executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_DNS }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          # Navigate to your project directory
+          cd ${{ secrets.TARGET_DIR }}
+
+          # Restart Gunicorn service
+          sudo systemctl restart gunicorn
