@@ -29,7 +29,7 @@ def room(request, pk):
 
             if os.path.exists(folder_path):
                 files = os.listdir(folder_path)
-                files = [file for file in files if os.path.isfile(os.path.join(folder_path, file)) and file.lower().endswith(('.jpg', '.jpeg', '.png', 'pdf'))]
+                files = [file for file in files if os.path.isfile(os.path.join(folder_path, file)) and file.lower().endswith(('.jpg', '.jpeg', '.png', 'pdf','txt'))]
                 files.sort()
             else:
                 files = []
