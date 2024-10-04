@@ -1,0 +1,35 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to EC2 Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}  # Your EC2 private key stored in GitHub Secrets
+        REMOTE_HOST: ${{ secrets.EC2_HOST }}         # Your EC2 public IP or DNS
+        REMOTE_USER: ${{ secrets.EC2_USERNAME }}     # Your EC2 instance's SSH user, e.g., 'ubuntu'
+        TARGET: ${{ secrets.EC2_TARGET }}            # Target directory on your EC2 instance, e.g., /home/ubuntu/app
+
+    - name: Executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          # Navigate to your project directory
+          cd ${{ secrets.EC2_TARGET }}
+
+          # Restart Gunicorn service
+          sudo systemctl restart gunicorn
