@@ -53,6 +53,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'erwapage.urls'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 
 TEMPLATES = [
     {
