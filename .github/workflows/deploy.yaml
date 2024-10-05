@@ -31,11 +31,5 @@ jobs:
           # Navigate to your project directory
           cd ${{ secrets.EC2_TARGET }}
 
-          # Delete old static files
-          rm -rf media/*
-
-          # Sync new files from the local repository to the EC2 instance
-          rsync -avz --delete ./ ${{ secrets.EC2_TARGET }}/
-
           # Restart Gunicorn service
           sudo systemctl restart gunicorn
