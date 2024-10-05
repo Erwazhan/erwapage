@@ -32,7 +32,7 @@ jobs:
           cd ${{ secrets.EC2_TARGET }}
 
           # Delete old static files
-          rm -rf staticfiles/*
+          rm -rf media/*
 
           # Sync new files from the local repository to the EC2 instance
           rsync -avz --delete ./ ${{ secrets.EC2_TARGET }}/
