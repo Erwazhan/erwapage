@@ -14,3 +14,17 @@
       transform: translate(-50%, -50%) rotate(360deg); /* Complete rotation */
   }
 }
+
+.window,
+.window_big {
+    transform: translateX(-100%); /* Start from the left */
+    opacity: 0;                    /* Start hidden */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Animation effect */
+}
+
+/* This class will be added to show the windows */
+.window.show,
+.window_big.show {
+    transform: translateX(0);      /* Move to original position */
+    opacity: 1;                    /* Fully visible */
+}

@@ -3,6 +3,8 @@ import os
 from .models import Room
 from .models import Window
 from django.conf import settings
+
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -92,35 +94,43 @@ def gallery(request):
 
 from .forms import ContactForm
 
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render
+from django.http import HttpResponse
+
 def contact(request):
-    form = ContactForm()
-    rooms = Room.objects.all()
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
 
-        if form.is_valid():
-            # Extract form data
-            message_email = form.cleaned_data['email']
-            message_subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
+        # Sending the email
+        try:
+            send_mail(
+                f"{name}, {subject}",  # Subject
+                message,               # Message
+                settings.DEFAULT_FROM_EMAIL,  # From email (set in settings)
+                ['erwazhan@gmail.com'], # To email
+                fail_silently=False,    # Set to True if you want to suppress errors
+            )
+            success_message = "Your message has been sent successfully!"
+        except Exception as e:
+            success_message = f"An error occurred: {e}"
 
-            # You can now process the data (e.g., send an email or save it to a database)
+        context = {
+            'MEDIA_URL': settings.MEDIA_URL,
+            'name': name,
+            'success_message': success_message,  # Add success message to context
+        }
 
-            # Optionally, pass the data to the context for display
-            context = {
-                'form': form,
-                'message_email': message_email,
-                'message_subject': message_subject,
-                'message': message,
-                'success': True  # Add a flag to indicate the form was successfully submitted
-            }
+        return render(request, 'contact.html', context)
 
-            return render(request, 'contact.html', context)
+    else:
+        context = {
+            'MEDIA_URL': settings.MEDIA_URL,
+        }
+        return render(request, 'contact.html', context)
 
-    context = {
-      'form': form,
-      'rooms':rooms,
-      'MEDIA_URL': settings.MEDIA_URL,
-    }
 
-    return render(request, 'contact.html', context)

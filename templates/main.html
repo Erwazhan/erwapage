@@ -1,6 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'myfirst.css' %}">
 <link rel="stylesheet" href="{% static 'animation.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,9 @@
   {%include 'footer.html' %}
 
   <script src="{% static 'windowscript.js' %}"></script>
-
+  <!--Animation script-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="{% static 'animation.js' %}"></script>
 </body>
 
 </html>
