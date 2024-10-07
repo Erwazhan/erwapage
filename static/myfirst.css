@@ -212,7 +212,6 @@ button:focus {
   background-size: cover;    /* Cover the entire container */
   background-position: center; /* Center the image within the container */
   background-repeat: no-repeat; /* Prevent image repetition */
-  overflow:hidden;
 }
 
 .contact-bar{
