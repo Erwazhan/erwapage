@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h2 style="text-align:center;">TONE</h2>
+
+
+<div class="galleryc" style="width:100%; display:flex;">
+  <div class="window_project" id="window" style="width:20%; height:auto; left:0%; margin-right:2.5%; margin-left:2.5%">
+    <div class="title-bar">
+        <div class="title-bar-text">
+            <p>Controls</p>
+        </div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="window-body">
+      <img src="{{MEDIA_URL}}/ToneStack.png " style="width:100%;">
+    </div>
+  </div>
+  <div class="gallery" style="width:50%; height:auto;">
+      <canvas id="myChart"></canvas>
+  </div>
+
+
+  <div class="window_project" id="window" style="width:20%; height:auto; left:2.5%;">
+    <div class="title-bar">
+        <div class="title-bar-text">
+            <p>Controls</p>
+        </div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="window-body" style="margin-top:5%;">
+        <div class="field-row" style="width: 60%;">
+            <label for="range25">Treble:</label>
+            <label for="range26">0</label>
+            <input type="range" class="slider" id="slider1" min="0" max="1" step=".1" value="0.5">
+            <label for="range27">10</label>
+        </div>
+        <div class="field-row" style="width: 60%;">
+            <p style="font-size: 20px">Mid</p>
+            <label for="range26">0</label>
+            <input type="range" class="slider" id="slider2" min="0" max="1" step=".1" value="0.5">
+            <label for="range27">10</label>
+        </div>
+        <div class="field-row" style="width: 60%;">
+            <label for="range25">Bass:</label>
+            <label for="range26">0</label>
+            <input type="range" class="slider" id="slider3" min="0" max="1" step=".1" value="0.5">
+            <label for="range27">10</label>
+        </div>
+
+        <button id="update_vals" style="width: 20%;height:5%; margin: 10% auto; display: block;">Update</button>
+
+        <div class="gallery_c" style="width:100%; display:flex;">
+            <div class="gallery" style="width:50%;">
+                <div class="field-row">
+                    <label for="R1">R1</label>
+                    <input id="R1" type="text" value="250000" style="width:45%"/>
+                    <label for="R1">Ohm</label>
+                </div>
+                <div class="field-row">
+                    <label for="R2">R2</label>
+                    <input id="R2" type="text" value="1000000" style="width:45%"/>
+                    <label for="R2">Ohm</label>
+                </div>
+                <div class="field-row">
+                    <label for="R3">R3</label>
+                    <input id="R3" type="text" value="25000" style="width:45%"/>
+                    <label for="R3">Ohm</label>
+                </div>
+                <div class="field-row">
+                    <label for="R4">R4</label>
+                    <input id="R4" type="text" value="56000" style="width:45%"/>
+                    <label for="R4">Ohm</label>
+                </div>
+            </div>
+            <div class="gallery" style="width:50%;">
+                <div class="field-row">
+                    <label for="C1">C1</label>
+                    <input id="C1" type="text" value=".00000000025" style="width:65%"/>
+                    <label for="C1">F</label>
+                </div>
+                <div class="field-row">
+                    <label for="C2">C2</label>
+                    <input id="C2" type="text" value=".000000022" style="width:65%"/>
+                    <label for="C2">F</label>
+                </div>
+                <div class="field-row">
+                    <label for="C3">C3</label>
+                    <input id="C3" type="text" value=".000000022" style="width:65%"/>
+                    <label for="C3">F</label>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</div>
+<script src="{% static 'tonestack.js' %}"></script>
+{% endblock %}

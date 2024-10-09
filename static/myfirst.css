@@ -73,6 +73,7 @@
   font-style: normal;
 }
 
+
 @media (max-width: 1024px) {
   .gallery_container {
     width: 45%;  /* Two per row on medium screens */
@@ -96,7 +97,7 @@
 
 body {
   font-family: monospace;
-  font-size: 12px;
+  font-size: 13px;
   color: #222222;
   margin: 0;
   padding: 0;
@@ -368,6 +369,7 @@ legend {
 .field-row {
   display: flex;
   align-items: center;
+  margin-bottom:10%;
 }
 
 [class^="field-row"] + [class^="field-row"] {
@@ -376,6 +378,7 @@ legend {
 
 .field-row * + * {
   margin-left: 6px;
+  font: 24px;
 }
 
 .field-row-stacked {
@@ -390,6 +393,7 @@ legend {
 label {
   display: inline-flex;
   align-items: center;
+  font-size:20px;
 }
 
 input[type="radio"],
@@ -433,6 +437,7 @@ input[type="radio"]:checked + label::after {
   position: absolute;
   background: url("data:image/svg+xml;charset=utf-8,%3Csvg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 0H1V1H0V2V3H1V4H3V3H4V2V1H3V0Z' fill='black'/%3E %3C/svg%3E");
 }
+
 
 input[type="radio"]:focus + label,
 input[type="checkbox"]:focus + label {
@@ -535,6 +540,67 @@ select {
 input[type="text"] {
   /* For some reason descenders are getting cut off without this */
   line-height: 2;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 21px;
+  width: 11px;
+  background: url("./icon/indicator-horizontal.svg");
+  transform: translateY(-8px);
+  box-shadow: none;
+  border: none;
+}
+
+input[type="range"].has-box-indicator::-webkit-slider-thumb {
+  background: url("./icon/indicator-rectangle-horizontal.svg");
+  transform: translateY(-10px);
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 21px;
+  width: 11px;
+  border: 0;
+  border-radius: 0;
+  background: url("./icon/indicator-horizontal.svg");
+  transform: translateY(2px);
+}
+
+input[type="range"].has-box-indicator::-moz-range-thumb {
+  background: url('../icon/indicator-rectangle-horizontal.svg');
+  transform: translateY(0px);
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  box-sizing: border-box;
+  background: black;
+  border-right: 1px solid grey;
+  border-bottom: 1px solid grey;
+  box-shadow: 1px 0 0 white, 1px 1px 0 white, 0 1px 0 white, -1px 0 0 darkgrey,
+    -1px -1px 0 darkgrey, 0 -1px 0 darkgrey, -1px 1px 0 white, 1px -1px darkgrey;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  box-sizing: border-box;
+  background: black;
+  border-right: 1px solid grey;
+  border-bottom: 1px solid grey;
+  box-shadow: 1px 0 0 white, 1px 1px 0 white, 0 1px 0 white, -1px 0 0 darkgrey,
+    -1px -1px 0 darkgrey, 0 -1px 0 darkgrey, -1px 1px 0 white, 1px -1px darkgrey;
 }
 
 select {
@@ -712,7 +778,7 @@ summary:focus {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: none;
 }
 ::-webkit-scrollbar:horizontal {
   height: 17px;

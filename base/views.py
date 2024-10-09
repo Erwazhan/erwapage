@@ -2,10 +2,20 @@ from django.shortcuts import render
 import os
 from .models import Room
 from .models import Window
+import numpy as np
 from django.conf import settings
 
 from django.core.mail import send_mail
 # Create your views here.
+
+
+def tonestack(request):
+    rooms = Room.objects.all()
+    context = {
+        'rooms': rooms,          # All room objects
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'tonestack.html', context)  # This is the correct way to return the response
 
 
 def navbar(request):
@@ -133,4 +143,32 @@ def contact(request):
         }
         return render(request, 'contact.html', context)
 
+from django.http import JsonResponse
+import json
+from .tonestack import toneResponse
 
+def update_tone_response(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        t = float(data['treble'])
+        m = float(data['mid'])
+        l = float(data['bass'])
+        R1 = float(data['R1'])
+        R2 = float(data['R2'])
+        R3 = float(data['R3'])
+        R4 = float(data['R4'])
+        C1 = float(data['C1'])
+        C2 = float(data['C2'])
+        C3 = float(data['C3'])
+
+        # Call the toneResponse function from utils
+        w, mag, phase = toneResponse(t, m, l, C1, C2, C3, R1, R2, R3, R4)
+
+        # Convert NumPy arrays to lists before returning as JSON
+        return JsonResponse({
+            'w': w.tolist() if isinstance(w, np.ndarray) else w,
+            'mag': mag.tolist() if isinstance(mag, np.ndarray) else mag,
+            'phase': phase.tolist() if isinstance(phase, np.ndarray) else phase
+        })
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)

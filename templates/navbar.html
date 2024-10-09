@@ -2,6 +2,7 @@
 <div>
   <div class="button-bar">
       <a href="/"><button style="font-weight: bold; font-size: 30px">HOME</button></a>
+      <a href="/tonestack"><button style="font-size: 24px">Tone Sim</button></a>
       {% for room in rooms %}
       <a href="/room/{{room.id}}"><button class="button" style="font-size:24px;">{{room.name}}</button></a>
       {% endfor %}
