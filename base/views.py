@@ -143,6 +143,55 @@ def contact(request):
         }
         return render(request, 'contact.html', context)
 
+def test(request):
+    rooms = Room.objects.all()
+
+    base_path = os.path.join(settings.MEDIA_ROOT, 'Writeups')  # Root folder containing the folders
+    folder_files = {}
+    folder_descriptions = []  # List of tuples (folder_name, description)
+
+    # Check if base_path exists
+    if os.path.exists(base_path):
+        # Loop through the subfolders within the base folder
+        for folder_name in os.listdir(base_path):
+            folder_path = os.path.join(base_path, folder_name)
+
+            # Check if the folder_name is actually a folder
+            if os.path.isdir(folder_path):
+                files = []
+                description_file = None  # To hold the description file name
+
+                # Loop through files in each folder
+                for file_name in os.listdir(folder_path):
+                    # Add images to the list
+                    if file_name.endswith(('.png', '.jpg', '.jpeg', '.svg')):
+                        files.append(file_name)
+                    # Load the description file
+                    elif file_name.endswith('.html'):
+                        description_file = file_name
+
+                files.sort()
+                # Add the folder and its files to the dictionary
+                folder_files[folder_name] = files
+
+                myKeys = list(folder_files.keys())
+                myKeys.sort()
+                sd = {i: folder_files[i] for i in myKeys}
+                # Store the folder name and its description file
+                if description_file:  # Check if a description file was found
+                    folder_descriptions.append((folder_name, description_file))
+
+    context = {
+        'rooms': rooms,
+        'folders': sd,
+        'descriptions': folder_descriptions,  # List of tuples (folder_name, description_file)
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'test.html', context)
+
+
+
+
 from django.http import JsonResponse
 import json
 from .tonestack import toneResponse

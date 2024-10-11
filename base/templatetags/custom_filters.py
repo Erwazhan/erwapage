@@ -14,4 +14,7 @@ def is_txt(value):
 @register.filter
 def is_img(value):
     return value.lower().endswith(('.jpg', '.jpeg', '.png', 'pdf'))
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 

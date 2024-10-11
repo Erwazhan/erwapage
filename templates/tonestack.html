@@ -4,8 +4,17 @@
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<h2 style="text-align:center;">TONE</h2>
+<h2 style="text-align:center;">Tone Stack Simulation</h2>
 
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+  <div style="width: 70%; text-align: left; margin-bottom:3%">
+    <embed style ="width:100%; height:35vh;"src="{{MEDIA_URL}}/tonestack.html"></embed>
+  </div>
+
+  <div style="text-align: center; margin-bottom:2%">
+    <h3>Frequency Response of a FMV Tone Stack</h3>
+  </div>
+</div>
 
 <div class="galleryc" style="width:100%; display:flex;">
   <div class="window_project" id="window" style="width:20%; height:auto; left:0%; margin-right:2.5%; margin-left:2.5%">
@@ -42,27 +51,28 @@
     </div>
 
     <div class="window-body" style="margin-top:5%;">
-        <div class="field-row" style="width: 60%;">
+        <div class="field-row" style="width: 80%;">
             <label for="range25">Treble:</label>
             <label for="range26">0</label>
-            <input type="range" class="slider" id="slider1" min="0" max="1" step=".1" value="0.5">
+            <input type="range" class="slider" id="slider1" min="0" max="1" step=".1" value="0.5" style="width: 80%;">
             <label for="range27">10</label>
         </div>
-        <div class="field-row" style="width: 60%;">
-            <p style="font-size: 20px">Mid</p>
+        <div class="field-row" style="width: 80%;">
+            <p style="font-size: 20px">Mid:</p>
             <label for="range26">0</label>
-            <input type="range" class="slider" id="slider2" min="0" max="1" step=".1" value="0.5">
+            <input type="range" class="slider" id="slider2" min="0" max="1" step=".1" value="0.5" style="width: 80%;">
             <label for="range27">10</label>
         </div>
-        <div class="field-row" style="width: 60%;">
+        <div class="field-row" style="width: 80%;">
             <label for="range25">Bass:</label>
             <label for="range26">0</label>
-            <input type="range" class="slider" id="slider3" min="0" max="1" step=".1" value="0.5">
+            <input type="range" class="slider" id="slider3" min="0" max="1" step=".1" value="0.5" style="width: 80%;">
             <label for="range27">10</label>
         </div>
-
-        <button id="update_vals" style="width: 20%;height:5%; margin: 10% auto; display: block;">Update</button>
-
+        <div class="container" style="display:flex; height:10%;">
+          <button id="update_vals" style="width: 20%;height:5%;">Update</button>
+          <button id="snapshot" style="width: 20%;height:5%;">Snapshot</button>
+        </div>
         <div class="gallery_c" style="width:100%; display:flex;">
             <div class="gallery" style="width:50%;">
                 <div class="field-row">

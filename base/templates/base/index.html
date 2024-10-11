@@ -5,10 +5,21 @@
   <h1>Erwazhan</h1>
 </div>
 
-<div class="gallery" style="background-image: ">
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+  <div style="width: 70%; text-align: left; margin-bottom:3%">
+    <embed style ="width:100%; height:35vh;"src="{{MEDIA_URL}}/about.html"></embed>
+  </div>
+
+  <div style="text-align: center; margin-bottom:2%">
+    <h3>Where I get my inspiration</h3>
+  </div>
+</div>
+
+
+<div class="gallery">
   {% for window in windows %}
     <div class="gallery_container">
-      <div class="window_gallery" id="window{{ window.foldername }}"  >
+      <div class="window_gallery" id="window{{ window.foldername }}" data-aos="zoom-in"  >
         <div class="title-bar">
           <div class="title-bar-text">
             <p>{{ window.foldername }}</p>

@@ -8,7 +8,7 @@ from django.urls import path, include
 urlpatterns = [
     path('', views.home, name="home"),
     path('room/<str:pk>/', views.room, name='room'),
-    path('test/', views.home, name='test'),
+    path('test/', views.test, name='test'),
     path('navbar/', views.navbar, name='navbar'),
     path('contact/', views.contact, name="contact"),
     path('tonestack/', views.tonestack, name="tonestack"),

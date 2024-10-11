@@ -261,14 +261,13 @@ button:focus {
     inset 2px 2px #dfdfdf;
   background: #c0c0c0;
   padding: 3px;
-  width: 50%;
+  width: 35%;
   height: 100%;
   background-color: #f0f0f0;
   position: relative;
   border: 1px solid #ccc;
   cursor: grab;
   overflow: hidden;
-  left:10%;
 }
 
 .window_big {
@@ -738,14 +737,13 @@ pre {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between; /* Distribute space between the window and the text */
-  height: 700px;
+  height: 75vh;
   position: relative;
 }
 .project_text {
   width: 20%;  /* Adjust the width to your needs */
   margin-bottom: 50px;
   display: flex;
-  height: 100%;
   align-items: center; /* Vertically center the text */
 }
 

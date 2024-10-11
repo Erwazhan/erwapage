@@ -149,3 +149,68 @@ document.getElementById('update_vals').addEventListener('click', function() {
     // Send data to the backend
     updateToneResponse(treble, mid, bass, R1, R2, R3, R4, C1, C2, C3);
 });
+
+document.getElementById('snapshot').addEventListener('click', function() {
+  // Get current values from sliders and input fields
+  let treble = parseFloat(document.getElementById('slider1').value);
+  let mid = parseFloat(document.getElementById('slider2').value);
+  let bass = parseFloat(document.getElementById('slider3').value);
+
+  let R1 = parseFloat(document.getElementById('R1').value);
+  let R2 = parseFloat(document.getElementById('R2').value);
+  let R3 = parseFloat(document.getElementById('R3').value);
+  let R4 = parseFloat(document.getElementById('R4').value);
+
+  let C1 = parseFloat(document.getElementById('C1').value);
+  let C2 = parseFloat(document.getElementById('C2').value);
+  let C3 = parseFloat(document.getElementById('C3').value);
+
+  // Send the current values to the backend to calculate gain
+  fetch('/update-tone-response/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCSRFToken(), // Add CSRF token for Django
+    },
+    body: JSON.stringify({
+      treble: treble,
+      mid: mid,
+      bass: bass,
+      R1: R1,
+      R2: R2,
+      R3: R3,
+      R4: R4,
+      C1: C1,
+      C2: C2,
+      C3: C3
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    let frequencies = data.w;  // Backend returns frequencies
+    let gain = data.mag;  // Backend returns gain (magnitude)
+
+    // Add new dataset to the chart for the snapshot
+    myChart.data.datasets.push({
+      label: `Snapshot (${new Date().toLocaleTimeString()})`,
+      data: gain,
+      borderColor: getRandomColor(), // Use a new color for each snapshot
+      fill: false,
+      borderWidth: 1
+    });
+
+    // Update the chart with the new dataset
+    myChart.update();
+  })
+  .catch(error => console.error('Error:', error));
+});
+
+// Function to generate a random color for each snapshot
+function getRandomColor() {
+  let letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
