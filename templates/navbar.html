@@ -1,11 +1,12 @@
 {% load static %}
 <div>
   <div class="button-bar">
-      <a href="/"><button style="font-weight: bold; font-size: 30px">HOME</button></a>
-      <a href="/test"><button style="font-size: 24px">Tube Amplifiers</button></a>
-      <a href="/tonestack"><button style="font-size: 24px">Tone Simulator</button></a>
-      {% for room in rooms %}
-      <a href="/room/{{room.id}}"><button class="button" style="font-size:24px;">{{room.name}}</button></a>
-      {% endfor %}
+    <a href="/"><button style="font-weight: bold; font-size: 30px">HOME</button></a>
+    <a href="/tonestack"><button style="font-size: 24px">Tone Simulator</button></a>
+    <a href="/tube-overdrive"><button style="font-size: 24px">Tube Amplifiers</button></a>
+    <a href="/solidstate"><button style="font-size: 24px">Solid State Pedals</button></a>
+    {% for room in rooms %}
+    <a href="/room/{{room.id}}"><button class="button" style="font-size:24px;">{{room.name}}</button></a>
+    {% endfor %}
   </div>
 </div>

@@ -107,7 +107,6 @@ from .forms import ContactForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def contact(request):
     if request.method == "POST":
@@ -143,7 +142,7 @@ def contact(request):
         }
         return render(request, 'contact.html', context)
 
-def test(request):
+def tubeoverdrive(request):
     rooms = Room.objects.all()
 
     base_path = os.path.join(settings.MEDIA_ROOT, 'Writeups')  # Root folder containing the folders
@@ -187,7 +186,18 @@ def test(request):
         'descriptions': folder_descriptions,  # List of tuples (folder_name, description_file)
         'MEDIA_URL': settings.MEDIA_URL,
     }
-    return render(request, 'test.html', context)
+    return render(request, 'tube-overdrive.html', context)
+
+def solidstate(request):
+    rooms = Room.objects.all()
+
+    context = {
+        'rooms':rooms,
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'solidstate.html', context)
+
+
 
 
 

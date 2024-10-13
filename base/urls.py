@@ -8,10 +8,11 @@ from django.urls import path, include
 urlpatterns = [
     path('', views.home, name="home"),
     path('room/<str:pk>/', views.room, name='room'),
-    path('test/', views.test, name='test'),
+    path('tube-overdrive/', views.tubeoverdrive, name='tube-overdrive'),
     path('navbar/', views.navbar, name='navbar'),
     path('contact/', views.contact, name="contact"),
     path('tonestack/', views.tonestack, name="tonestack"),
+    path('solidstate/', views.solidstate, name="solidstate"),
     path('update-tone-response/', views.update_tone_response, name='update_tone_response'),  # For AJAX requests
 
 ]

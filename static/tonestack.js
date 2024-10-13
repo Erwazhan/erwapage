@@ -71,6 +71,7 @@ function updateChart(w, mag) {
     myChart.data.labels = w;
     myChart.data.datasets[0].data = mag; // Magnitude
     myChart.update();
+    console.log(getCSRFToken())
 }
 
 // Initialize chart with default values
